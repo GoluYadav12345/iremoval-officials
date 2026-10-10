@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iREMOVAL PRO - Official iPhone SN Registration & Verification Platform</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        iremoval: {
+                            bg: '#080c10',
+                            card: '#0f172a',
+                            border: 'rgba(255,255,255,0.1)',
+                            accent: '#38bdf8',
+                            accentGlow: 'rgba(56, 189, 248, 0.25)'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #06090e;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(14, 165, 233, 0.12) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(30, 58, 138, 0.15) 0px, transparent 50%);
+        }
+        .glass-panel {
+            background: rgba(13, 19, 31, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .glass-card {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-card:hover {
+            border-color: rgba(56, 189, 248, 0.5);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px -10px rgba(56, 189, 248, 0.25);
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #06090e;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #38bdf8;
+        }
+    </style>
+</head>
+<body class="bg-[#06090e] text-gray-100 font-sans min-h-screen flex flex-col antialiased selection:bg-sky-500 selection:text-white">
+
+    <!-- HEADER / NAVIGATION -->
+    <header class="sticky top-0 z-40 glass-panel border-b border-slate-800/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- iREMOVAL PRO Vector Logo & Branding -->
+                <div class="flex items-center space-x-3.5 cursor-pointer" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+                    <div class="relative w-11 h-11 flex items-center justify-center rounded-xl bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-700/60 shadow-lg shadow-sky-500/10 p-1.5 group">
+                        <!-- Custom SVG Vector Logo recreating iREMOVAL PRO Speed Emblem -->
+                        <svg viewBox="0 0 100 100" class="w-full h-full text-slate-200 group-hover:scale-105 transition duration-300" fill="currentColor">
+                            <!-- Curved Shield/Arch Base -->
+                            <path d="M 38 15 C 60 20, 68 40, 60 85 C 40 80, 32 60, 38 15 Z" fill="#e2e8f0" />
+                            <!-- Horizontal Motion Speed Cutout Lines -->
+                            <rect x="20" y="32" width="30" height="4" rx="2" fill="#06090e" />
+                            <rect x="15" y="44" width="38" height="4" rx="2" fill="#06090e" />
+                            <rect x="22" y="56" width="30" height="4" rx="2" fill="#06090e" />
+                            <!-- Trailing Speed Streaks (Right Side) -->
+                            <rect x="52" y="32" width="22" height="4" rx="2" fill="#e2e8f0" />
+                            <rect x="58" y="44" width="16" height="4" rx="2" fill="#e2e8f0" />
+                            <rect x="52" y="56" width="24" height="4" rx="2" fill="#e2e8f0" />
+                            <rect x="62" y="38" width="10" height="3" rx="1.5" fill="#e2e8f0" />
+                            <rect x="62" y="50" width="12" height="3" rx="1.5" fill="#e2e8f0" />
+                        </svg>
+                        <div class="absolute inset-0 bg-sky-500/10 rounded-xl opacity-0 group-hover:opacity-100 transition"></div>
+                    </div>
+                    <div>
+                        <div class="flex items-center space-x-1.5">
+                            <span class="text-xl font-black tracking-tight text-white uppercase font-sans">
+                                iREMOVAL<span class="text-sky-400 font-light ml-1">PRO</span>
+                            </span>
+                            <span class="bg-sky-500/20 text-sky-400 text-[10px] font-bold px-2 py-0.5 rounded-full border border-sky-500/30">OFFICIAL</span>
+                        </div>
+                        <p class="text-[11px] text-gray-400 font-medium tracking-wide">Premier SN Activation Engine</p>
+                    </div>
+                </div>
+
+                <!-- Navigation Links -->
+                <nav class="hidden md:flex items-center space-x-8 text-sm font-medium">
+                    <a href="#models" class="text-gray-300 hover:text-sky-400 transition">Supported Models</a>
+                    <a href="#how-it-works" class="text-gray-300 hover:text-sky-400 transition">How it Works</a>
+                    <a href="#payment-info" class="text-gray-300 hover:text-sky-400 transition">Binance Payment</a>
+                    <a href="#history" onclick="openHistoryModal()" class="text-gray-300 hover:text-sky-400 transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-clock-rotate-left text-sky-400"></i> My Registered Orders
+                    </a>
+                </nav>
+
+                <!-- User Controls / Auth Buttons -->
+                <div class="flex items-center space-x-3" id="navAuthArea">
+                    <button onclick="openAuthModal('login')" class="px-4 py-2 text-sm font-medium text-gray-300 hover:text-white transition">
+                        Login
+                    </button>
+                    <button onclick="openAuthModal('register')" class="px-4 py-2 text-sm font-semibold bg-sky-500 hover:bg-sky-400 text-slate-950 rounded-xl shadow-lg shadow-sky-500/20 transition transform active:scale-95">
+                        Register
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="relative overflow-hidden pt-12 pb-16 md:pt-20 md:pb-24 border-b border-slate-900">
+        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-sky-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute top-1/3 right-10 w-72 h-72 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900/90 border border-slate-700 text-xs text-sky-400 mb-6 font-semibold">
+                <span class="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                Official iREMOVAL PRO Auto-Server v6.2 (2026 Ready)
+            </div>
+            
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-tight uppercase">
+                iREMOVAL PRO <span class="bg-clip-text text-transparent bg-gradient-to-r from-sky-400 via-blue-400 to-indigo-300">SN Registration</span>
+            </h1>
+            <p class="mt-4 text-base sm:text-lg text-slate-400 max-w-3xl mx-auto font-normal leading-relaxed">
+                Fastest bypass & activation database for iPhone 7 up to iPhone 16 Pro Max. Starting price from <span class="text-emerald-400 font-bold">$25</span> with automatic +$5 incremental tier pricing per generation. Verified Binance Pay & USDT processing.
+            </p>
+
+            <!-- Key Highlights Badges -->
+            <div class="mt-8 flex flex-wrap justify-center gap-4 text-xs sm:text-sm font-medium text-slate-300">
+                <div class="flex items-center gap-2 bg-slate-900/80 px-4 py-2.5 rounded-xl border border-slate-800 shadow-sm">
+                    <i class="fa-solid fa-bolt-lightning text-amber-400"></i> Instant Auto-Activation
+                </div>
+                <div class="flex items-center gap-2 bg-slate-900/80 px-4 py-2.5 rounded-xl border border-slate-800 shadow-sm">
+                    <i class="fa-brands fa-bitcoin text-amber-400"></i> Binance Pay ID & USDT (TRC20)
+                </div>
+                <div class="flex items-center gap-2 bg-slate-900/80 px-4 py-2.5 rounded-xl border border-slate-800 shadow-sm">
+                    <i class="fa-solid fa-shield-halved text-sky-400"></i> 100% Success Guarantee
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full" id="models">
+        
+        <!-- Section Title & Filters -->
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
+            <div>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-white flex items-center gap-2.5">
+                    <i class="fa-solid fa-mobile-screen-button text-sky-400"></i> Select iPhone Model
+                </h2>
+                <p class="text-xs text-slate-400 mt-1">Starting from $25 (+ $5 addition per generation step)</p>
+            </div>
+
+            <!-- Search & Filter Controls -->
+            <div class="flex flex-col sm:flex-row items-center gap-3">
+                <div class="relative w-full sm:w-72">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-sm"></i>
+                    <input type="text" id="searchInput" oninput="filterModels()" placeholder="Search model (e.g. 15 Pro Max)..." 
+                           class="w-full bg-slate-900/90 border border-slate-800 text-sm rounded-xl pl-10 pr-4 py-2.5 text-white placeholder-slate-500 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 transition">
+                </div>
+                <select id="categoryFilter" onchange="filterModels()" class="w-full sm:w-auto bg-slate-900/90 border border-slate-800 text-sm rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-sky-500 transition">
+                    <option value="all">All iPhone Generations</option>
+                    <option value="legacy">iPhone 7 - iPhone X ($25 - $35)</option>
+                    <option value="mid">iPhone 11 - iPhone 13 ($40 - $60)</option>
+                    <option value="flagship">iPhone 14 - iPhone 16 Pro Max ($65 - $85)</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- MODELS GRID CONTAINER -->
+        <div id="modelsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <!-- JavaScript dynamically injects model cards here -->
+        </div>
+
+        <!-- HOW IT WORKS SECTION -->
+        <section id="how-it-works" class="mt-20 pt-10 border-t border-slate-900">
+            <div class="text-center mb-12">
+                <h3 class="text-2xl font-bold text-white">How iREMOVAL PRO Registration Works</h3>
+                <p class="text-slate-400 text-xs mt-1">Simple 3-step activation process</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="glass-card p-6 rounded-2xl relative">
+                    <div class="w-12 h-12 bg-sky-500/20 text-sky-400 border border-sky-500/30 rounded-xl flex items-center justify-center font-bold text-xl mb-4">1</div>
+                    <h4 class="text-lg font-semibold text-white">Select iPhone Model</h4>
+                    <p class="text-slate-400 text-xs mt-2 leading-relaxed">Choose your exact iPhone model from the catalog list. System calculates exact model registration price starting from $25.</p>
+                </div>
+                <div class="glass-card p-6 rounded-2xl relative">
+                    <div class="w-12 h-12 bg-amber-500/20 text-amber-400 border border-amber-500/30 rounded-xl flex items-center justify-center font-bold text-xl mb-4">2</div>
+                    <h4 class="text-lg font-semibold text-white">Enter Serial Number (SN)</h4>
+                    <p class="text-slate-400 text-xs mt-2 leading-relaxed">Input your iPhone's 12-digit Serial Number or IMEI from your device's Activation Screen or Settings.</p>
+                </div>
+                <div class="glass-card p-6 rounded-2xl relative">
+                    <div class="w-12 h-12 bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 rounded-xl flex items-center justify-center font-bold text-xl mb-4">3</div>
+                    <h4 class="text-lg font-semibold text-white">Binance Crypto Payment</h4>
+                    <p class="text-slate-400 text-xs mt-2 leading-relaxed">Transfer USDT or pay via Binance Pay ID. Enter your TxID to trigger instant server database registration.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- BINANCE PAYMENT INFO CARD -->
+        <section id="payment-info" class="mt-16 bg-gradient-to-r from-amber-950/30 via-slate-900 to-black p-8 rounded-3xl border border-amber-500/30">
+            <div class="flex flex-col lg:flex-row items-center justify-between gap-8">
+                <div class="space-y-4 max-w-xl">
+                    <div class="inline-flex items-center gap-2 text-xs font-bold text-amber-400 bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/20">
+                        <i class="fa-brands fa-bitcoin text-base"></i> Official Binance Crypto Payment Channel
+                    </div>
+                    <h3 class="text-2xl sm:text-3xl font-extrabold text-white">Direct Binance Auto-Processing</h3>
+                    <p class="text-slate-300 text-xs leading-relaxed">
+                        Instant 24/7 activation server connected with Binance Pay ID and Binance USDT TRC20 address. Transfer the exact amount for your selected iPhone model and submit your TxID for instant database registration.
+                    </p>
+                    <div class="pt-2 flex flex-wrap gap-4 text-xs text-slate-400">
+                        <span class="flex items-center gap-1.5"><i class="fa-solid fa-circle-check text-emerald-400"></i> Zero Fee Binance Pay ID</span>
+                        <span class="flex items-center gap-1.5"><i class="fa-solid fa-circle-check text-emerald-400"></i> Instant TRC20 Confirmation</span>
+                    </div>
+                </div>
+
+                <div class="w-full lg:w-auto bg-slate-950 p-6 rounded-2xl border border-slate-800 space-y-4 min-w-[300px]">
+                    <div>
+                        <span class="text-xs text-slate-400 block font-medium">Binance Pay ID</span>
+                        <div class="flex items-center justify-between mt-1 bg-slate-900 p-2.5 rounded-xl border border-slate-700">
+                            <span class="font-mono text-sm text-amber-400 font-bold" id="mainBinanceId">839401823</span>
+                            <button onclick="copyToClipboard('839401823', 'Binance ID')" class="text-xs bg-slate-800 hover:bg-slate-700 text-white px-3 py-1 rounded-lg font-semibold transition">Copy</button>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="text-xs text-slate-400 block font-medium">USDT Address (TRC20 Network)</span>
+                        <div class="flex items-center justify-between mt-1 bg-slate-900 p-2.5 rounded-xl border border-slate-700 gap-2">
+                            <span class="font-mono text-xs text-slate-300 truncate" id="mainUsdtAddress">T9xP2kL1M8vQzR4wE7yU0sA3dB6cN5xF</span>
+                            <button onclick="copyToClipboard('T9xP2kL1M8vQzR4wE7yU0sA3dB6cN5xF', 'USDT Address')" class="text-xs bg-slate-800 hover:bg-slate-700 text-white px-3 py-1 rounded-lg font-semibold transition shrink-0">Copy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-950 border-t border-slate-900 mt-20 py-8 text-center text-xs text-slate-500">
+        <div class="max-w-7xl mx-auto px-4">
+            <p>© 2026 iREMOVAL PRO Official Platform. All rights reserved. iPhone is a registered trademark of Apple Inc.</p>
+            <p class="mt-2 text-slate-600">Fastest Serial Number Activation Server • Automated Binance Pay Engine</p>
+        </div>
+    </footer>
+
+    
+    <!-- REGISTRATION / ORDER MODAL -->
+    <div id="orderModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4">
+        <div class="glass-panel w-full max-w-lg rounded-3xl border border-slate-800 p-6 sm:p-8 relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeOrderModal()" class="absolute top-5 right-5 text-slate-400 hover:text-white transition text-lg w-8 h-8 rounded-full bg-slate-800/60 flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="flex items-center space-x-3 mb-6">
+                <div class="w-10 h-10 rounded-xl bg-sky-500/20 border border-sky-500/30 flex items-center justify-center text-sky-400 font-bold">
+                    <i class="fa-solid fa-mobile-screen"></i>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-white" id="modalModelTitle">Register iPhone SN</h3>
+                    <p class="text-xs text-slate-400">Complete details below to submit to iREMOVAL PRO Database</p>
+                </div>
+            </div>
+
+            <!-- Form Content -->
+            <form id="snRegisterForm" onsubmit="handleSNSubmit(event)" class="space-y-5">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Selected iPhone Model</label>
+                    <input type="text" id="modalModelInput" readonly class="w-full bg-slate-900 border border-slate-800 text-sm rounded-xl px-4 py-3 text-sky-400 font-semibold focus:outline-none cursor-not-allowed">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">iPhone Serial Number (SN) / IMEI *</label>
+                    <input type="text" id="snInput" required placeholder="e.g. C39Z9001N475 or 35820129482..." 
+                           class="w-full bg-slate-900 border border-slate-800 text-sm rounded-xl px-4 py-3 text-white placeholder-slate-600 focus:outline-none focus:border-sky-500 font-mono tracking-wider transition">
+                    <span class="text-[11px] text-slate-500 mt-1.5 block">Enter exact Serial Number found on Hello screen info icon or Settings > About.</span>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Service Type</label>
+                        <select id="serviceType" class="w-full bg-slate-900 border border-slate-800 text-xs rounded-xl px-3 py-3 text-white focus:outline-none focus:border-sky-500">
+                            <option value="bypass">iREMOVAL PRO Full Bypass</option>
+                            <option value="check">Full FMI / SN Check Report</option>
+                            <option value="carrier">Carrier SIM Unlock</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Total Price</label>
+                        <div class="w-full bg-slate-900 border border-slate-800 text-sm rounded-xl px-4 py-3 text-emerald-400 font-bold flex items-center justify-between">
+                            <span>$</span>
+                            <span id="modalPriceTag">0.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full py-3.5 bg-sky-500 hover:bg-sky-400 text-slate-950 font-extrabold rounded-xl shadow-lg shadow-sky-500/20 transition transform active:scale-95 flex items-center justify-center gap-2">
+                    Proceed to Binance Payment <i class="fa-solid fa-arrow-right text-xs"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- BINANCE PAYMENT INSTRUCTION MODAL -->
+    <div id="binancePayModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4">
+        <div class="glass-panel w-full max-w-lg rounded-3xl border border-amber-500/30 p-6 sm:p-8 relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeBinanceModal()" class="absolute top-5 right-5 text-slate-400 hover:text-white transition text-lg w-8 h-8 rounded-full bg-slate-800/60 flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="text-center mb-6">
+                <div class="w-14 h-14 bg-amber-500/20 text-amber-400 border border-amber-500/40 rounded-2xl mx-auto flex items-center justify-center text-2xl mb-3">
+                    <i class="fa-brands fa-bitcoin"></i>
+                </div>
+                <h3 class="text-2xl font-extrabold text-white">Binance Crypto Payment</h3>
+                <p class="text-xs text-slate-400 mt-1">Transfer exact USDT to finalize iREMOVAL PRO SN Registration</p>
+            </div>
+
+            <!-- Payment Summary Card -->
+            <div class="bg-amber-500/10 border border-amber-500/20 rounded-2xl p-4 mb-6 flex justify-between items-center">
+                <div>
+                    <span class="text-xs text-slate-400 block">Total Amount Due:</span>
+                    <span class="text-xl font-bold text-amber-400" id="payModalAmount">$0.00 USDT</span>
+                </div>
+                <div class="text-right">
+                    <span class="text-xs text-slate-400 block">Target Device SN:</span>
+                    <span class="text-xs font-mono text-white font-semibold" id="payModalSn">---</span>
+                </div>
+            </div>
+
+            <!-- Options -->
+            <div class="space-y-4">
+                <!-- Option 1: Binance Pay ID -->
+                <div class="bg-slate-900 p-4 rounded-xl border border-slate-800">
+                    <span class="text-xs font-semibold text-amber-400 uppercase tracking-wider block mb-2">Option 1: Binance Pay ID (Zero Fees)</span>
+                    <div class="flex items-center justify-between bg-black p-3 rounded-lg border border-slate-800">
+                        <span class="font-mono text-sm font-bold text-white">839401823</span>
+                        <button onclick="copyToClipboard('839401823', 'Binance Pay ID')" class="text-xs bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-3 py-1.5 rounded-lg transition">Copy Pay ID</button>
+                    </div>
+                </div>
+
+                <!-- Option 2: USDT Wallet -->
+                <div class="bg-slate-900 p-4 rounded-xl border border-slate-800">
+                    <span class="text-xs font-semibold text-amber-400 uppercase tracking-wider block mb-2">Option 2: USDT (TRC20 Network Address)</span>
+                    <div class="flex items-center justify-between bg-black p-3 rounded-lg border border-slate-800 gap-2">
+                        <span class="font-mono text-xs text-slate-300 truncate">T9xP2kL1M8vQzR4wE7yU0sA3dB6cN5xF</span>
+                        <button onclick="copyToClipboard('T9xP2kL1M8vQzR4wE7yU0sA3dB6cN5xF', 'USDT Address')" class="text-xs bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-3 py-1.5 rounded-lg transition shrink-0">Copy Address</button>
+                    </div>
+                </div>
+
+                <!-- TxID Input Form -->
+                <form onsubmit="confirmBinanceTransaction(event)" class="space-y-4 pt-2">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1">Transaction Hash / TxID *</label>
+                        <input type="text" id="txIdInput" required placeholder="Paste Binance TxID or Transfer Reference..." 
+                               class="w-full bg-slate-900 border border-slate-800 text-sm rounded-xl px-4 py-3 text-white placeholder-slate-600 focus:outline-none focus:border-amber-500 font-mono transition">
+                    </div>
+
+                    <button type="submit" class="w-full py-3.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold rounded-xl shadow-lg shadow-amber-500/20 transition transform active:scale-95">
+                        Submit Payment Verification
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- USER AUTH MODAL (LOGIN / REGISTER) -->
+    <div id="authModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4">
+        <div class="glass-panel w-full max-w-md rounded-3xl border border-slate-800 p-6 sm:p-8 relative">
+            <button onclick="closeAuthModal()" class="absolute top-5 right-5 text-slate-400 hover:text-white transition text-lg w-8 h-8 rounded-full bg-slate-800/60 flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <!-- Auth Mode Switch Tabs -->
+            <div class="flex border-b border-slate-800 mb-6">
+                <button id="loginTabBtn" onclick="switchAuthTab('login')" class="flex-1 pb-3 font-semibold text-sm text-sky-400 border-b-2 border-sky-400 transition">Login</button>
+                <button id="registerTabBtn" onclick="switchAuthTab('register')" class="flex-1 pb-3 font-semibold text-sm text-slate-400 border-b-2 border-transparent hover:text-slate-200 transition">Register Account</button>
+            </div>
+
+            <!-- Login Form -->
+            <form id="loginForm" onsubmit="handleAuthLogin(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">Email Address</label>
+                    <input type="email" required placeholder="yourname@gmail.com" class="w-full bg-slate-900 border border-slate-800 text-sm rounded-xl px-4 py-3 text-white focus:outline-none focus:border-sky-500 transition">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">Password</label>
+                    <input type="password" required placeholder="••••••••" class="w-full bg-slate-900 border border-slate-800 text-sm rounded-xl px-4 py-3 text-white focus:outline-none focus:border-sky-500 transition">
+                </div>
+                <button type="submit" class="w-full py-3 bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold rounded-xl shadow-lg shadow-sky-500/20 transition">
+                    Sign In
+                </button>
+            </form>
+
+            <!-- Register Form -->
+            <form id="registerForm" onsubmit="handleAuthRegister(event)" class="space-y-4 hidden">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">Full Name</label>
+                    <input type="text" id="regName" required placeholder="John Doe" class="w-full bg-slate-900 border border-slate-800 text-sm rounded-xl px-4 py-3 text-white focus:outline-none focus:border-sky-500 transition">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">Email Address</label>
+                    <input type="email" id="regEmail" required placeholder="yourname@gmail.com" class="w-full bg-slate-900 border border-slate-800 text-sm rounded-xl px-4 py-3 text-white focus:outline-none focus:border-sky-500 transition">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">Password</label>
+                    <input type="password" required placeholder="Create strong password" class="w-full bg-slate-900 border border-slate-800 text-sm rounded-xl px-4 py-3 text-white focus:outline-none focus:border-sky-500 transition">
+                </div>
+                <button type="submit" class="w-full py-3 bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold rounded-xl shadow-lg shadow-sky-500/20 transition">
+                    Create iREMOVAL Account
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ORDER HISTORY / USER DASHBOARD MODAL -->
+    <div id="historyModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4">
+        <div class="glass-panel w-full max-w-2xl rounded-3xl border border-slate-800 p-6 sm:p-8 relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeHistoryModal()" class="absolute top-5 right-5 text-slate-400 hover:text-white transition text-lg w-8 h-8 rounded-full bg-slate-800/60 flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <h3 class="text-xl font-bold text-white mb-1 flex items-center gap-2">
+                <i class="fa-solid fa-clock-rotate-left text-sky-400"></i> My Registered Device Orders
+            </h3>
+            <p class="text-xs text-slate-400 mb-6">Real-time status of your iREMOVAL PRO Serial Number registrations</p>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs">
+                    <thead class="bg-slate-900 text-slate-400 uppercase tracking-wider">
+                        <tr>
+                            <th class="p-3 rounded-l-lg">Model</th>
+                            <th class="p-3">Serial / IMEI</th>
+                            <th class="p-3">Price</th>
+                            <th class="p-3">TxID</th>
+                            <th class="p-3 rounded-r-lg">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="historyTableBody" class="divide-y divide-slate-800/60 text-slate-300">
+                        <!-- Dynamic Rows or Empty Placeholder -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // iPhone Model Dataset starting at $25 with progressive +$5 increments per generation
+        const iphoneModels = [
+            // Tier 1 - Legacy ($25 - $35)
+            { id: 'ip7', name: 'iPhone 7 / 7 Plus', price: 25, cat: 'legacy', img: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?fit=crop&w=300&h=300' },
+            { id: 'ip8', name: 'iPhone 8 / 8 Plus', price: 30, cat: 'legacy', img: 'https://images.unsplash.com/photo-1565849904461-04a58ad377e0?fit=crop&w=300&h=300' },
+            { id: 'ipx', name: 'iPhone X / XR / XS', price: 35, cat: 'legacy', img: 'https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?fit=crop&w=300&h=300' },
+
+            // Tier 2 - Mid Range ($40 - $60)
+            { id: 'ip11', name: 'iPhone 11 Series', price: 40, cat: 'mid', img: 'https://images.unsplash.com/photo-1574755393849-623942496936?fit=crop&w=300&h=300' },
+            { id: 'ip12', name: 'iPhone 12 / 12 Mini', price: 45, cat: 'mid', img: 'https://images.unsplash.com/photo-1605236453806-6ff36851218e?fit=crop&w=300&h=300' },
+            { id: 'ip12pro', name: 'iPhone 12 Pro / Pro Max', price: 50, cat: 'mid', img: 'https://images.unsplash.com/photo-1603921326210-6edd2d60ca68?fit=crop&w=300&h=300' },
+            { id: 'ip13', name: 'iPhone 13 / 13 Mini', price: 55, cat: 'mid', img: 'https://images.unsplash.com/photo-1632661674596-df8be070a5c5?fit=crop&w=300&h=300' },
+            { id: 'ip13pro', name: 'iPhone 13 Pro / Pro Max', price: 60, cat: 'mid', img: 'https://images.unsplash.com/photo-1632661674596-df8be070a5c5?fit=crop&w=300&h=300' },
+
+            // Tier 3 - Flagship ($65 - $85)
+            { id: 'ip14', name: 'iPhone 14 / 14 Plus', price: 65, cat: 'flagship', img: 'https://images.unsplash.com/photo-1663499482523-1c0c1bae4ce1?fit=crop&w=300&h=300' },
+            { id: 'ip14pro', name: 'iPhone 14 Pro / Pro Max', price: 70, cat: 'flagship', img: 'https://images.unsplash.com/photo-1663499482523-1c0c1bae4ce1?fit=crop&w=300&h=300' },
+            { id: 'ip15', name: 'iPhone 15 / 15 Plus', price: 75, cat: 'flagship', img: 'https://images.unsplash.com/photo-1695048133142-1a20484d2569?fit=crop&w=300&h=300' },
+            { id: 'ip15pro', name: 'iPhone 15 Pro / Pro Max', price: 80, cat: 'flagship', img: 'https://images.unsplash.com/photo-1695048133142-1a20484d2569?fit=crop&w=300&h=300' },
+            { id: 'ip16pro', name: 'iPhone 16 Pro / Pro Max', price: 85, cat: 'flagship', img: 'https://images.unsplash.com/photo-1695048133142-1a20484d2569?fit=crop&w=300&h=300' }
+        ];
+
+        let activeOrder = null;
+        let userOrders = [];
+        let currentUser = null;
+
+        // Initialize Page Grid
+        window.addEventListener('DOMContentLoaded', () => {
+            renderModels(iphoneModels);
+            loadOrderHistory();
+        });
+
+        function renderModels(models) {
+            const container = document.getElementById('modelsGrid');
+            container.innerHTML = '';
+
+            if (models.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full text-center py-12 text-slate-500">
+                        <i class="fa-solid fa-magnifying-glass text-3xl mb-3 block"></i>
+                        No iPhone model matches your filter. Please try another search keyword.
+                    </div>`;
+                return;
+            }
+
+            models.forEach(m => {
+                const card = document.createElement('div');
+                card.className = 'glass-card rounded-2xl p-5 flex flex-col justify-between relative overflow-hidden';
+                card.innerHTML = `
+                    <div>
+                        <div class="relative h-44 w-full mb-4 rounded-xl overflow-hidden bg-black/60 border border-slate-800">
+                            <img src="${m.img}" alt="${m.name}" class="w-full h-full object-cover transform hover:scale-105 transition duration-500 opacity-90" 
+                                 onerror="this.src='https://placehold.co/300x300/111/fff?text=${encodeURIComponent(m.name)}'">
+                            <span class="absolute top-3 right-3 bg-sky-500/90 backdrop-blur-md text-slate-950 text-xs font-extrabold px-3 py-1 rounded-full shadow-lg">
+                                $${m.price} USDT
+                            </span>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-1">${m.name}</h3>
+                        <p class="text-xs text-slate-400 mb-4 flex items-center gap-1.5">
+                            <i class="fa-solid fa-circle-check text-emerald-400 text-[10px]"></i> iREMOVAL PRO Auto Engine Supported
+                        </p>
+                    </div>
+
+                    <div class="pt-3 border-t border-slate-800/80 flex items-center justify-between">
+                        <div class="text-xs text-slate-400">
+                            Model Fee: <span class="text-white font-semibold">$${m.price}</span>
+                        </div>
+                        <button onclick="openRegisterModal('${m.id}')" class="px-3.5 py-2 bg-sky-500 hover:bg-sky-400 text-slate-950 text-xs font-bold rounded-xl transition shadow-lg shadow-sky-500/15 flex items-center gap-1">
+                            Register SN <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                        </button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function filterModels() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const cat = document.getElementById('categoryFilter').value;
+
+            const filtered = iphoneModels.filter(m => {
+                const matchesSearch = m.name.toLowerCase().includes(query);
+                const matchesCat = (cat === 'all') || (m.cat === cat);
+                return matchesSearch && matchesCat;
+            });
+
+            renderModels(filtered);
+        }
+
+        function openRegisterModal(modelId) {
+            const model = iphoneModels.find(m => m.id === modelId);
+            if (!model) return;
+
+            activeOrder = {
+                modelName: model.name,
+                price: model.price,
+                sn: '',
+                service: 'bypass'
+            };
+
+            document.getElementById('modalModelTitle').innerText = `Register ${model.name}`;
+            document.getElementById('modalModelInput').value = model.name;
+            document.getElementById('modalPriceTag').innerText = model.price.toFixed(2);
+            document.getElementById('snInput').value = '';
+
+            document.getElementById('orderModal').classList.remove('hidden');
+        }
+
+        function closeOrderModal() {
+            document.getElementById('orderModal').classList.add('hidden');
+        }
+
+        function handleSNSubmit(e) {
+            e.preventDefault();
+            const sn = document.getElementById('snInput').value.trim();
+            if (!sn) {
+                showToast('Please enter a valid Serial Number or IMEI!', 'error');
+                return;
+            }
+
+            activeOrder.sn = sn;
+            activeOrder.service = document.getElementById('serviceType').value;
+
+            closeOrderModal();
+
+            // Open Binance Pay Modal
+            document.getElementById('payModalAmount').innerText = `$${activeOrder.price.toFixed(2)} USDT`;
+            document.getElementById('payModalSn').innerText = activeOrder.sn;
+            document.getElementById('txIdInput').value = '';
+            document.getElementById('binancePayModal').classList.remove('hidden');
+        }
+
+        function closeBinanceModal() {
+            document.getElementById('binancePayModal').classList.add('hidden');
+        }
+
+        function confirmBinanceTransaction(e) {
+            e.preventDefault();
+            const txId = document.getElementById('txIdInput').value.trim();
+            if (!txId) {
+                showToast('Transaction Hash (TxID) is required for payment verification!', 'error');
+                return;
+            }
+
+            // Save order into history state
+            const newOrder = {
+                id: 'IREM-' + Math.floor(100000 + Math.random() * 900000),
+                model: activeOrder.modelName,
+                sn: activeOrder.sn,
+                price: activeOrder.price,
+                txId: txId,
+                status: 'Processing',
+                date: new Date().toLocaleTimeString()
+            };
+
+            userOrders.unshift(newOrder);
+            updateHistoryTable();
+
+            closeBinanceModal();
+            showToast('Payment hash submitted! iREMOVAL PRO Server is verifying your registration.', 'success');
+
+            // Simulate Auto-Approval in 5 seconds
+            setTimeout(() => {
+                newOrder.status = 'Activated';
+                updateHistoryTable();
+                showToast(`SN ${newOrder.sn} has been successfully ACTIVATED on iREMOVAL PRO!`, 'success');
+            }, 5000);
+        }
+
+        function copyToClipboard(text, label) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+
+            showToast(`${label} copied to clipboard!`, 'info');
+        }
+
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            const bgClass = type === 'error' ? 'bg-red-600' : type === 'success' ? 'bg-emerald-600' : 'bg-sky-600';
+            toast.className = `fixed bottom-5 right-5 z-50 ${bgClass} text-white text-xs font-medium px-5 py-3 rounded-xl shadow-2xl transition transform duration-300 translate-y-10 opacity-0 flex items-center gap-2`;
+            toast.innerHTML = `<i class="fa-solid ${type === 'success' ? 'fa-circle-check' : 'fa-circle-info'}"></i> ${message}`;
+            
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-10', 'opacity-0');
+            }, 50);
+
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-10');
+                setTimeout(() => toast.remove(), 300);
+            }, 3500);
+        }
+
+        function openAuthModal(mode) {
+            switchAuthTab(mode);
+            document.getElementById('authModal').classList.remove('hidden');
+        }
+
+        function closeAuthModal() {
+            document.getElementById('authModal').classList.add('hidden');
+        }
+
+        function switchAuthTab(mode) {
+            const loginBtn = document.getElementById('loginTabBtn');
+            const regBtn = document.getElementById('registerTabBtn');
+            const loginForm = document.getElementById('loginForm');
+            const regForm = document.getElementById('registerForm');
+
+            if (mode === 'login') {
+                loginBtn.className = 'flex-1 pb-3 font-semibold text-sm text-sky-400 border-b-2 border-sky-400 transition';
+                regBtn.className = 'flex-1 pb-3 font-semibold text-sm text-slate-400 border-b-2 border-transparent hover:text-slate-200 transition';
+                loginForm.classList.remove('hidden');
+                regForm.classList.add('hidden');
+            } else {
+                regBtn.className = 'flex-1 pb-3 font-semibold text-sm text-sky-400 border-b-2 border-sky-400 transition';
+                loginBtn.className = 'flex-1 pb-3 font-semibold text-sm text-slate-400 border-b-2 border-transparent hover:text-slate-200 transition';
+                regForm.classList.remove('hidden');
+                loginForm.classList.add('hidden');
+            }
+        }
+
+        function handleAuthLogin(e) {
+            e.preventDefault();
+            currentUser = { name: 'PRO Reseller', email: 'user@iremoval.pro' };
+            updateNavUserUI();
+            closeAuthModal();
+            showToast('Welcome back! Logged into iREMOVAL PRO Portal.', 'success');
+        }
+
+        function handleAuthRegister(e) {
+            e.preventDefault();
+            const name = document.getElementById('regName').value;
+            currentUser = { name: name || 'PRO Reseller', email: document.getElementById('regEmail').value };
+            updateNavUserUI();
+            closeAuthModal();
+            showToast('iREMOVAL PRO Account created successfully!', 'success');
+        }
+
+        function updateNavUserUI() {
+            const navArea = document.getElementById('navAuthArea');
+            if (currentUser) {
+                navArea.innerHTML = `
+                    <div class="flex items-center space-x-3 bg-slate-900 px-3 py-1.5 rounded-xl border border-slate-800">
+                        <div class="w-7 h-7 rounded-full bg-sky-500 text-slate-950 flex items-center justify-center font-bold text-xs">
+                            ${currentUser.name.charAt(0).toUpperCase()}
+                        </div>
+                        <span class="text-xs font-semibold text-slate-200 hidden sm:inline">${currentUser.name}</span>
+                        <button onclick="logout()" class="text-xs text-red-400 hover:text-red-300 ml-1"><i class="fa-solid fa-right-from-bracket"></i></button>
+                    </div>
+                `;
+            }
+        }
+
+        function logout() {
+            currentUser = null;
+            location.reload();
+        }
+
+        function openHistoryModal() {
+            updateHistoryTable();
+            document.getElementById('historyModal').classList.remove('hidden');
+        }
+
+        function closeHistoryModal() {
+            document.getElementById('historyModal').classList.add('hidden');
+        }
+
+        function loadOrderHistory() {
+            // Initial sample entry for visual feedback
+            userOrders = [
+                { id: 'IREM-782910', model: 'iPhone 15 Pro Max', sn: 'F2LXK091P012', price: 80, txId: '0x94a821...e3', status: 'Activated', date: '10:42 AM' }
+            ];
+        }
+
+        function updateHistoryTable() {
+            const tbody = document.getElementById('historyTableBody');
+            tbody.innerHTML = '';
+
+            if (userOrders.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="5" class="p-6 text-center text-slate-500">
+                            No Serial Numbers submitted yet. Select a model to register.
+                        </td>
+                    </tr>`;
+                return;
+            }
+
+            userOrders.forEach(o => {
+                const tr = document.createElement('tr');
+                const badgeColor = o.status === 'Activated' ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30' : 'bg-amber-500/20 text-amber-400 border-amber-500/30';
+                
+                tr.innerHTML = `
+                    <td class="p-3 font-semibold text-white">${o.model}</td>
+                    <td class="p-3 font-mono text-sky-400">${o.sn}</td>
+                    <td class="p-3">$${o.price} USDT</td>
+                    <td class="p-3 font-mono text-slate-400">${o.txId}</td>
+                    <td class="p-3">
+                        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold border ${badgeColor}">
+                            ${o.status}
+                        </span>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+    </script>
+</body>
+</html>
