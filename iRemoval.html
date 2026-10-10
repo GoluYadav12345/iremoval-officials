@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en" class="light max-w-full overflow-x-hidden">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>iREMOVAL PRO - Official iPhone SN Registration & Verification Platform</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        iremoval: {
+                            bg: '#f8fafc',
+                            panel: '#ffffff',
+                            card: '#ffffff',
+                            border: 'rgba(0, 0, 0, 0.1)',
+                            cyan: '#0284c7',
+                            emerald: '#059669',
+                            amber: '#d97706',
+                            rose: '#e11d48'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * {
+            touch-action: manipulation;
+        }
+        html, body {
+            max-width: 100%;
+            overflow-x: hidden;
+            background-color: #f8fafc;
+            color: #0f172a;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+        }
+        .glass-card {
+            background: #ffffff;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            transition: all 0.25s ease-in-out;
+        }
+        .glass-card:hover {
+            border-color: rgba(2, 132, 199, 0.4);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="font-sans min-h-screen flex flex-col antialiased selection:bg-sky-500 selection:text-white max-w-full overflow-x-hidden">
+
+    <!-- SIDE DRAWER MENU -->
+    <div id="sideDrawer" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden transition-all duration-300">
+        <div class="w-80 max-w-[85%] bg-white h-full shadow-2xl border-r border-slate-200 p-5 flex flex-col justify-between overflow-y-auto">
+            <div>
+                <div class="flex items-center justify-between pb-4 border-b border-slate-200">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-8 h-8 rounded-lg bg-sky-500/10 border border-sky-500/30 flex items-center justify-center text-sky-600 font-bold">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+                        <div>
+                            <span class="text-sm font-black text-slate-900 uppercase block leading-none">A M A N ツ</span>
+                            <span class="text-[10px] text-slate-500">(Customer Portal)</span>
+                        </div>
+                    </div>
+                    <button onclick="toggleSideMenu()" class="text-slate-500 hover:text-slate-900 p-1">
+                        <i class="fa-solid fa-xmark text-lg"></i>
+                    </button>
+                </div>
+
+                <!-- Nav Menu List -->
+                <div class="mt-4 space-y-1 text-xs font-semibold text-slate-700">
+                    <a href="#clientView" onclick="toggleSideMenu(); switchClientTab('dashboard')" class="flex items-center justify-between p-3 rounded-xl hover:bg-slate-100 transition">
+                        <span class="flex items-center gap-2.5"><i class="fa-solid fa-gauge text-sky-600"></i> My Dashboard</span>
+                        <i class="fa-solid fa-chevron-right text-[10px] text-slate-400"></i>
+                    </a>
+                    <a href="#orders" onclick="toggleSideMenu(); switchClientTab('orders')" class="flex items-center justify-between p-3 rounded-xl hover:bg-slate-100 transition">
+                        <span class="flex items-center gap-2.5"><i class="fa-solid fa-clock-rotate-left text-sky-600"></i> My Order History</span>
+                        <i class="fa-solid fa-chevron-right text-[10px] text-slate-400"></i>
+                    </a>
+                    <a href="#" onclick="toggleSideMenu(); promptAddBalance()" class="flex items-center justify-between p-3 rounded-xl hover:bg-slate-100 transition">
+                        <span class="flex items-center gap-2.5"><i class="fa-solid fa-circle-plus text-sky-600"></i> Add Balance</span>
+                        <i class="fa-solid fa-chevron-right text-[10px] text-slate-400"></i>
+                    </a>
+
+                    <div class="pt-3 mt-3 border-t border-slate-200">
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 px-3 mb-2 block">SERVICE LIST</span>
+                        <a href="#" onclick="toggleSideMenu(); switchClientTab('services')" class="flex items-center justify-between p-3 rounded-xl hover:bg-slate-100 transition">
+                            <span class="flex items-center gap-2.5"><i class="fa-solid fa-mobile-screen text-amber-600"></i> iPhone Model Registration Services</span>
+                            <i class="fa-solid fa-chevron-right text-[10px] text-slate-400"></i>
+                        </a>
+                        <a href="#" onclick="toggleSideMenu(); handleRestrictedClick('Server Service')" class="flex items-center justify-between p-3 rounded-xl hover:bg-slate-100 transition">
+                            <span class="flex items-center gap-2.5"><i class="fa-solid fa-server text-emerald-600"></i> Server Service</span>
+                            <i class="fa-solid fa-chevron-right text-[10px] text-slate-400"></i>
+                        </a>
+                        <a href="#" onclick="toggleSideMenu(); handleRestrictedClick('Remote Service')" class="flex items-center justify-between p-3 rounded-xl hover:bg-slate-100 transition">
+                            <span class="flex items-center gap-2.5"><i class="fa-solid fa-laptop-code text-indigo-600"></i> Remote Service</span>
+                            <i class="fa-solid fa-chevron-right text-[10px] text-slate-400"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-3 border-t border-slate-200 space-y-2">
+                <a href="https://t.me/iboLegit" target="_blank" class="w-full py-2.5 bg-sky-500 text-white font-bold rounded-xl text-xs transition flex items-center justify-center gap-2">
+                    <i class="fa-brands fa-telegram"></i> Telegram: @iboLegit
+                </a>
+                <button onclick="tryOpenAdmin()" class="w-full py-2.5 bg-slate-900 text-white font-bold rounded-xl text-xs transition flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-lock"></i> Admin Panel
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOP HEADER -->
+    <header class="sticky top-0 z-40 glass-panel border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 sm:h-20">
+                <div class="flex items-center space-x-3">
+                    <button onclick="toggleSideMenu()" class="p-2 rounded-xl bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200 focus:outline-none">
+                        <i class="fa-solid fa-bars text-base"></i>
+                    </button>
+
+                    <div class="flex items-center space-x-2.5 cursor-pointer" onclick="switchView('client'); switchClientTab('dashboard');">
+                        <div class="w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-xl bg-slate-900 text-white p-1">
+                            <svg viewBox="0 0 100 100" class="w-full h-full text-white" fill="currentColor">
+                                <path d="M 38 15 C 60 20, 68 40, 60 85 C 40 80, 32 60, 38 15 Z" fill="#ffffff" />
+                            </svg>
+                        </div>
+                        <div>
+                            <span class="text-base sm:text-lg font-black tracking-tight text-slate-900 uppercase block leading-none">
+                                iREMOVAL<span class="text-sky-600 font-light ml-0.5">PRO</span>
+                            </span>
+                            <span class="bg-sky-100 text-sky-700 text-[9px] font-bold px-2 py-0.2 rounded-full uppercase tracking-wider inline-block mt-0.5">
+                                OFFICIAL PORTAL
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex items-center space-x-2">
+                    <button onclick="openAuthModal('login')" class="px-3 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-100 rounded-lg">Login</button>
+                    <button onclick="openAuthModal('register')" class="px-3 py-1.5 text-xs font-semibold bg-sky-600 text-white rounded-lg shadow-sm">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTAINER -->
+    <div class="flex-grow max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-6 w-full max-w-full overflow-x-hidden">
+
+        <!-- ================= ADMIN VIEW ================= -->
+        <div id="adminView" class="space-y-8 hidden">
+            <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 pb-4">
+                <div class="flex flex-wrap items-center gap-1.5">
+                    <button id="tabBtn-dashboard" onclick="switchAdminTab('dashboard')" class="admin-tab-btn active px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 bg-sky-100 text-sky-700 border border-sky-300">
+                        <i class="fa-solid fa-chart-pie"></i> Overview
+                    </button>
+                    <button id="tabBtn-orders" onclick="switchAdminTab('orders')" class="admin-tab-btn px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 text-slate-600 hover:bg-slate-100">
+                        <i class="fa-solid fa-list-check"></i> Orders <span id="pendingCountBadge" class="bg-amber-500 text-white font-black px-1.5 py-0.2 text-[10px] rounded-full">0</span>
+                    </button>
+                    <button id="tabBtn-payments" onclick="switchAdminTab('payments')" class="admin-tab-btn px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 text-slate-600 hover:bg-slate-100">
+                        <i class="fa-brands fa-bitcoin text-amber-600"></i> Payments
+                    </button>
+                    <button id="tabBtn-models" onclick="switchAdminTab('models')" class="admin-tab-btn px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 text-slate-600 hover:bg-slate-100">
+                        <i class="fa-solid fa-mobile-screen-button"></i> Pricing
+                    </button>
+                    <button id="tabBtn-settings" onclick="switchAdminTab('settings')" class="admin-tab-btn px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 text-slate-600 hover:bg-slate-100">
+                        <i class="fa-solid fa-gear"></i> Settings
+                    </button>
+                </div>
+                <button onclick="switchView('client')" class="px-3.5 py-2 bg-slate-900 text-white text-xs font-bold rounded-xl">
+                    Exit Admin
+                </button>
+            </div>
+
+            <!-- Admin Tabs Content -->
+            <div id="adminTab-dashboard" class="space-y-6">
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="glass-card p-4 rounded-2xl">
+                        <span class="text-[11px] font-semibold text-slate-500 block mb-1">Total Revenue</span>
+                        <h3 class="text-xl font-black text-slate-900" id="statTotalRevenue">$0.00</h3>
+                    </div>
+                    <div class="glass-card p-4 rounded-2xl">
+                        <span class="text-[11px] font-semibold text-slate-500 block mb-1">Total Orders</span>
+                        <h3 class="text-xl font-black text-slate-900" id="statTotalOrders">0</h3>
+                    </div>
+                    <div class="glass-card p-4 rounded-2xl">
+                        <span class="text-[11px] font-semibold text-slate-500 block mb-1">Pending Approval</span>
+                        <h3 class="text-xl font-black text-amber-600" id="statPendingOrders">0</h3>
+                    </div>
+                    <div class="glass-card p-4 rounded-2xl">
+                        <span class="text-[11px] font-semibold text-slate-500 block mb-1">Activated SNs</span>
+                        <h3 class="text-xl font-black text-emerald-600" id="statActivatedOrders">0</h3>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-2xl p-4 sm:p-6">
+                    <h3 class="text-sm font-bold text-slate-900 mb-4">Recent Submissions</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs">
+                            <thead class="bg-slate-100 text-slate-600 uppercase tracking-wider">
+                                <tr>
+                                    <th class="p-2.5 rounded-l-lg">Model</th>
+                                    <th class="p-2.5">Serial / IMEI</th>
+                                    <th class="p-2.5">Fee</th>
+                                    <th class="p-2.5">Status</th>
+                                    <th class="p-2.5 rounded-r-lg text-right">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recentOrdersTbody" class="divide-y divide-slate-200 text-slate-700"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div id="adminTab-orders" class="space-y-6 hidden">
+                <div class="glass-card p-4 sm:p-6 rounded-2xl">
+                    <h3 class="text-base font-bold text-slate-900 mb-4">Orders Database</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs">
+                            <thead class="bg-slate-100 text-slate-600 uppercase tracking-wider">
+                                <tr>
+                                    <th class="p-2.5">Order ID</th>
+                                    <th class="p-2.5">Model</th>
+                                    <th class="p-2.5">Serial Number</th>
+                                    <th class="p-2.5">Fee</th>
+                                    <th class="p-2.5">TxID</th>
+                                    <th class="p-2.5">Status</th>
+                                    <th class="p-2.5 text-right">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adminOrdersTbody" class="divide-y divide-slate-200 text-slate-700"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div id="adminTab-payments" class="space-y-6 hidden">
+                <div class="glass-card p-4 sm:p-6 rounded-2xl">
+                    <h3 class="text-base font-bold text-slate-900 mb-4">Pending Payments Queue</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs">
+                            <thead class="bg-slate-100 text-slate-600 uppercase tracking-wider">
+                                <tr>
+                                    <th class="p-2.5">TxID</th>
+                                    <th class="p-2.5">Amount</th>
+                                    <th class="p-2.5">Model</th>
+                                    <th class="p-2.5">Serial</th>
+                                    <th class="p-2.5 text-right">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adminPaymentsTbody" class="divide-y divide-slate-200 text-slate-700"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div id="adminTab-models" class="space-y-6 hidden">
+                <div class="glass-card p-4 sm:p-6 rounded-2xl">
+                    <h3 class="text-base font-bold text-slate-900 mb-4">iPhone Pricing Configurator</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3" id="adminModelsGrid"></div>
+                </div>
+            </div>
+
+            <div id="adminTab-settings" class="space-y-6 hidden">
+                <div class="glass-card p-4 sm:p-6 rounded-2xl space-y-4 max-w-lg">
+                    <h3 class="text-base font-bold text-slate-900">Binance Settings</h3>
+                    <form onsubmit="saveBinanceSettings(event)" class="space-y-3">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1">Binance Pay ID</label>
+                            <input type="text" id="cfgBinanceId" required class="w-full bg-slate-50 border border-slate-300 text-xs font-mono rounded-xl p-3 text-slate-900">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1">USDT TRC20 Address</label>
+                            <input type="text" id="cfgUsdtAddress" required class="w-full bg-slate-50 border border-slate-300 text-xs font-mono rounded-xl p-3 text-slate-900">
+                        </div>
+                        <button type="submit" class="w-full py-3 bg-amber-600 text-white text-xs font-black rounded-xl">Save Settings</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= CLIENT VIEW ================= -->
+        <div id="clientView" class="space-y-8">
+            
+            <!-- SECTION 1: DASHBOARD (Default Home View) -->
+            <div id="clientSection-dashboard" class="space-y-6">
+                <div class="relative overflow-hidden rounded-3xl bg-slate-900 text-white p-6 sm:p-8 shadow-xl">
+                    <div class="max-w-2xl space-y-3">
+                        <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/20 text-sky-400 text-xs font-semibold">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                            Official iREMOVAL PRO Auto Engine
+                        </span>
+                        <h1 class="text-2xl sm:text-4xl font-black tracking-tight uppercase">
+                            iPhone <span class="text-sky-400">SN Registration</span>
+                        </h1>
+                        <p class="text-slate-300 text-xs leading-relaxed">
+                            Fastest bypass & activation database for iPhone 7 up to iPhone 16 Pro Max starting from <span class="text-emerald-400 font-bold">$25</span>.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Support & Prices Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="glass-card p-5 rounded-2xl flex items-start space-x-4">
+                        <div class="w-12 h-12 rounded-2xl bg-sky-100 text-sky-600 flex items-center justify-center shrink-0 text-xl">
+                            <i class="fa-solid fa-headset"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-base font-bold text-slate-900">24 Hours Support</h3>
+                            <p class="text-xs text-slate-600 mt-1 leading-relaxed">
+                                Support 24 hours / 7 days-a-week email & remote support services staffed to handle any issue quickly. Contact via Telegram: <a href="https://t.me/iboLegit" target="_blank" class="text-sky-600 font-bold">@iboLegit</a>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="glass-card p-5 rounded-2xl flex items-start space-x-4">
+                        <div class="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0 text-xl">
+                            <i class="fa-solid fa-tags"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-base font-bold text-slate-900">Attractive Prices</h3>
+                            <p class="text-xs text-slate-600 mt-1 leading-relaxed">
+                                Competitive prices across all iPhone models. All advertised prices can be negotiated to beat competition.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 2: SERVICES (Models listed only when opened via Menu -> Service) -->
+            <div id="clientSection-services" class="space-y-4 hidden">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-mobile-screen-button text-sky-600"></i> iPhone Model Registration Services
+                    </h2>
+                    <input type="text" id="clientSearchInput" oninput="renderClientModels()" placeholder="Search iPhone model..." 
+                           class="bg-white border border-slate-300 text-xs rounded-xl px-3.5 py-2 text-slate-900 focus:outline-none focus:border-sky-500 w-full sm:w-60">
+                </div>
+                <div id="clientModelsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"></div>
+            </div>
+
+            <!-- SECTION 3: ORDERS HISTORY -->
+            <div id="clientSection-orders" class="space-y-4 hidden">
+                <div class="glass-card p-5 rounded-2xl space-y-3" id="orders">
+                    <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-clock-rotate-left text-sky-600"></i> My Registered Orders
+                    </h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs">
+                            <thead class="bg-slate-100 text-slate-600 uppercase tracking-wider">
+                                <tr>
+                                    <th class="p-2.5 rounded-l-lg">Model</th>
+                                    <th class="p-2.5">Serial / IMEI</th>
+                                    <th class="p-2.5">Fee</th>
+                                    <th class="p-2.5">TxID</th>
+                                    <th class="p-2.5 rounded-r-lg">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="clientOrdersTbody" class="divide-y divide-slate-200 text-slate-700"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- MODAL 1: ORDER REGISTRATION -->
+    <div id="clientOrderModal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center p-3">
+        <div class="bg-white w-full max-w-md rounded-3xl border border-slate-200 p-5 sm:p-6 relative max-h-[90vh] overflow-y-auto shadow-2xl">
+            <button onclick="closeModal('clientOrderModal')" class="absolute top-4 right-4 text-slate-500 hover:text-slate-900 text-lg w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <h3 class="text-lg font-bold text-slate-900 mb-1" id="mClientModelTitle">Register iPhone SN</h3>
+            <p class="text-xs text-slate-500 mb-5">Enter target iPhone Serial Number</p>
+
+            <form onsubmit="handleClientOrderSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Selected Model</label>
+                    <input type="text" id="mClientModelInput" readonly class="w-full bg-slate-100 border border-slate-200 text-xs rounded-xl p-3 text-sky-600 font-bold focus:outline-none">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Serial Number (SN) / IMEI *</label>
+                    <input type="text" id="mClientSnInput" required placeholder="e.g. C39Z9001N475..." 
+                           class="w-full bg-slate-50 border border-slate-300 text-xs rounded-xl p-3 text-slate-900 focus:outline-none focus:border-sky-500 font-mono">
+                </div>
+
+                <div class="flex items-center justify-between p-3 bg-slate-100 rounded-xl">
+                    <span class="text-xs text-slate-600">Fee:</span>
+                    <span class="text-sm font-black text-emerald-600" id="mClientPriceTag">$0.00 USDT</span>
+                </div>
+
+                <button type="submit" class="w-full py-3.5 bg-sky-600 hover:bg-sky-500 text-white font-black rounded-xl transition shadow-md text-xs">
+                    Place Order & Proceed to Payment →
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL 2: BINANCE CHECKOUT -->
+    <div id="binanceCheckoutModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-3">
+        <div class="bg-white w-full max-w-md rounded-3xl border border-slate-200 p-5 sm:p-6 relative max-h-[90vh] overflow-y-auto shadow-2xl">
+            <button onclick="closeModal('binanceCheckoutModal')" class="absolute top-4 right-4 text-slate-500 hover:text-slate-900 text-lg w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="text-center mb-4">
+                <div class="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-50 text-amber-700 border border-amber-300 text-[11px] font-bold rounded-full mb-2">
+                    <i class="fa-solid fa-clock"></i> Time Left: <span id="paymentTimer">30:00</span>
+                </div>
+                <h3 class="text-lg font-bold text-slate-900">Binance Payment</h3>
+                <p class="text-xs text-slate-500">Scan QR or Transfer USDT</p>
+            </div>
+
+            <!-- BINANCE QR CODE -->
+            <div class="bg-slate-50 p-3 rounded-2xl w-44 h-44 mx-auto mb-4 flex flex-col items-center justify-center border border-slate-200 shadow-inner">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=TBLayLghJ61Vh164pJ6MjzqHGigqnSMXcg" alt="Binance QR" class="w-full h-full object-contain">
+            </div>
+
+            <div class="space-y-2 text-xs mb-4">
+                <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+                    <span class="text-amber-700 font-bold block text-[10px] mb-0.5">Binance Pay ID</span>
+                    <div class="flex items-center justify-between">
+                        <span class="font-mono text-slate-900 font-bold text-xs" id="modalBinanceId">1206973705</span>
+                        <button onclick="copyText('modalBinanceId')" class="px-2 py-0.5 bg-amber-500 text-white font-bold text-[10px] rounded">Copy</button>
+                    </div>
+                </div>
+
+                <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+                    <span class="text-amber-700 font-bold block text-[10px] mb-0.5">USDT TRC20 Address</span>
+                    <div class="flex items-center justify-between gap-1">
+                        <span class="font-mono text-slate-700 truncate text-[10px]" id="modalUsdtAddr">TBLayLghJ61Vh164pJ6MjzqHGigqnSMXcg</span>
+                        <button onclick="copyText('modalUsdtAddr')" class="px-2 py-0.5 bg-amber-500 text-white font-bold text-[10px] rounded shrink-0">Copy</button>
+                    </div>
+                </div>
+            </div>
+
+            <form onsubmit="handleBinanceTxSubmit(event)" class="space-y-3">
+                <div>
+                    <label class="block text-[11px] font-semibold text-slate-700 mb-1">Transaction Hash / TxID *</label>
+                    <input type="text" id="mTxIdInput" required placeholder="Paste TxID..." class="w-full bg-slate-50 border border-slate-300 text-xs rounded-xl p-3 text-slate-900 font-mono">
+                </div>
+                <button type="submit" class="w-full py-3 bg-amber-500 text-white text-xs font-black rounded-xl">Confirm Payment & Activate</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL 3: LOGIN / SIGN UP -->
+    <div id="authModal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center p-3">
+        <div class="bg-white w-full max-w-sm rounded-3xl border border-slate-200 p-6 relative shadow-2xl">
+            <button onclick="closeModal('authModal')" class="absolute top-4 right-4 text-slate-500 hover:text-slate-900 text-lg w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <h3 class="text-lg font-bold text-slate-900 mb-4" id="authModalTitle">Login</h3>
+            <form onsubmit="handleAuthSubmit(event)" class="space-y-3">
+                <div id="authNameField" class="hidden">
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Full Name</label>
+                    <input type="text" id="authName" placeholder="Aman" class="w-full bg-slate-50 border border-slate-300 text-xs rounded-xl p-3 text-slate-900">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">User ID / Email</label>
+                    <input type="text" id="authEmail" required placeholder="aman@gmail.com" class="w-full bg-slate-50 border border-slate-300 text-xs rounded-xl p-3 text-slate-900">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Password</label>
+                    <input type="password" required placeholder="••••••••" class="w-full bg-slate-50 border border-slate-300 text-xs rounded-xl p-3 text-slate-900">
+                </div>
+                <button type="submit" id="authSubmitBtn" class="w-full py-3 bg-sky-600 text-white text-xs font-black rounded-xl">Login to Portal</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- SCRIPT -->
+    <script>
+        const defaultModels = [
+            { id: 'ip7', name: 'iPhone 7 / 7 Plus', price: 25, active: true },
+            { id: 'ip8', name: 'iPhone 8 / 8 Plus', price: 30, active: true },
+            { id: 'ipx', name: 'iPhone X / XR / XS', price: 35, active: true },
+            { id: 'ip11', name: 'iPhone 11 Series', price: 40, active: true },
+            { id: 'ip12', name: 'iPhone 12 / 12 Mini', price: 45, active: true },
+            { id: 'ip12pro', name: 'iPhone 12 Pro / Pro Max', price: 50, active: true },
+            { id: 'ip13', name: 'iPhone 13 / 13 Mini', price: 55, active: true },
+            { id: 'ip13pro', name: 'iPhone 13 Pro / Pro Max', price: 60, active: true },
+            { id: 'ip14', name: 'iPhone 14 / 14 Plus', price: 65, active: true },
+            { id: 'ip14pro', name: 'iPhone 14 Pro / Pro Max', price: 70, active: true },
+            { id: 'ip15', name: 'iPhone 15 / 15 Plus', price: 75, active: true },
+            { id: 'ip15pro', name: 'iPhone 15 Pro / Pro Max', price: 80, active: true },
+            { id: 'ip16pro', name: 'iPhone 16 Pro / Pro Max', price: 85, active: true }
+        ];
+
+        const defaultOrders = [
+            { id: 'IREM-948102', model: 'iPhone 15 Pro Max', sn: 'F2LXK091P012', price: 80, txId: '0x84a921...e4', status: 'Activated', date: '2026-10-08' }
+        ];
+
+        let appState = {
+            view: 'client',
+            clientTab: 'dashboard',
+            adminTab: 'dashboard',
+            binanceId: '1206973705',
+            usdtAddress: 'TBLayLghJ61Vh164pJ6MjzqHGigqnSMXcg',
+            models: defaultModels,
+            orders: defaultOrders,
+            activeClientOrder: null,
+            authMode: 'login'
+        };
+
+        let ADMIN_PASSWORD = "Aman@3332";
+        let isAdminAuthenticated = false;
+        let timerInterval = null;
+
+        window.addEventListener('DOMContentLoaded', () => {
+            loadFromStorage();
+            renderAll();
+        });
+
+        function toggleSideMenu() {
+            document.getElementById('sideDrawer').classList.toggle('hidden');
+        }
+
+        function switchClientTab(tab) {
+            appState.clientTab = tab;
+            ['dashboard', 'services', 'orders'].forEach(t => {
+                const el = document.getElementById(`clientSection-${t}`);
+                if (t === tab) el.classList.remove('hidden');
+                else el.classList.add('hidden');
+            });
+        }
+
+        function handleRestrictedClick(serviceName) {
+            showToast(`${serviceName} is currently not allowed or disabled. Contact Telegram @iboLegit`, 'error');
+        }
+
+        function promptAddBalance() {
+            const credit = prompt("Enter credit amount required ($ USDT):");
+            if (credit && !isNaN(credit)) {
+                window.open("https://t.me/iboLegit", "_blank");
+                showToast(`Please pay $${credit} via Binance to Telegram @iboLegit`, 'success');
+            }
+        }
+
+        function tryOpenAdmin() {
+            const pass = prompt("Enter Admin Password:");
+            if (pass === ADMIN_PASSWORD) {
+                isAdminAuthenticated = true;
+                switchView('admin');
+                toggleSideMenu();
+            } else {
+                showToast("Incorrect password!", "error");
+            }
+        }
+
+        function openAuthModal(mode) {
+            appState.authMode = mode;
+            const title = document.getElementById('authModalTitle');
+            const nameField = document.getElementById('authNameField');
+            const submitBtn = document.getElementById('authSubmitBtn');
+            if (mode === 'register') {
+                title.innerText = "Sign Up Account";
+                nameField.classList.remove('hidden');
+                submitBtn.innerText = "Create Account";
+            } else {
+                title.innerText = "Login";
+                nameField.classList.add('hidden');
+                submitBtn.innerText = "Login to Portal";
+            }
+            document.getElementById('authModal').classList.remove('hidden');
+        }
+
+        function handleAuthSubmit(e) {
+            e.preventDefault();
+            const email = document.getElementById('authEmail').value;
+            closeModal('authModal');
+            showToast(`Successfully logged in as ${email}`, 'success');
+        }
+
+        function saveToStorage() {
+            localStorage.setItem('iREMOVAL_STATE_V4', JSON.stringify({
+                binanceId: appState.binanceId,
+                usdtAddress: appState.usdtAddress,
+                models: appState.models,
+                orders: appState.orders
+            }));
+        }
+
+        function loadFromStorage() {
+            const saved = localStorage.getItem('iREMOVAL_STATE_V4');
+            if (saved) {
+                try {
+                    const parsed = JSON.parse(saved);
+                    appState.binanceId = parsed.binanceId || '1206973705';
+                    appState.usdtAddress = parsed.usdtAddress || 'TBLayLghJ61Vh164pJ6MjzqHGigqnSMXcg';
+                    appState.models = parsed.models || defaultModels;
+                    appState.orders = parsed.orders || defaultOrders;
+                } catch(e) {}
+            }
+        }
+
+        function switchView(mode) {
+            appState.view = mode;
+            const adminView = document.getElementById('adminView');
+            const clientView = document.getElementById('clientView');
+
+            if (mode === 'admin') {
+                adminView.classList.remove('hidden');
+                clientView.classList.add('hidden');
+            } else {
+                adminView.classList.add('hidden');
+                clientView.classList.remove('hidden');
+            }
+            renderAll();
+        }
+
+        function switchAdminTab(tab) {
+            appState.adminTab = tab;
+            ['dashboard', 'orders', 'payments', 'models', 'settings'].forEach(t => {
+                const el = document.getElementById(`adminTab-${t}`);
+                if (t === tab) el.classList.remove('hidden');
+                else el.classList.add('hidden');
+            });
+        }
+
+        function renderAll() {
+            renderKPIs();
+            renderRecentOrders();
+            renderAdminOrders();
+            renderAdminPayments();
+            renderAdminModels();
+            renderClientModels();
+            renderClientOrders();
+            syncSettingsForm();
+        }
+
+        function renderKPIs() {
+            const totalRevenue = appState.orders.filter(o => o.status === 'Activated').reduce((acc, o) => acc + o.price, 0);
+            document.getElementById('statTotalRevenue').innerText = `$${totalRevenue.toFixed(2)}`;
+            document.getElementById('statTotalOrders').innerText = appState.orders.length;
+            document.getElementById('statPendingOrders').innerText = appState.orders.filter(o => o.status === 'Pending').length;
+            document.getElementById('statActivatedOrders').innerText = appState.orders.filter(o => o.status === 'Activated').length;
+            document.getElementById('pendingCountBadge').innerText = appState.orders.filter(o => o.status === 'Pending').length;
+        }
+
+        function renderRecentOrders() {
+            const tbody = document.getElementById('recentOrdersTbody');
+            tbody.innerHTML = '';
+            appState.orders.slice(0, 5).forEach(o => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="p-2.5 font-semibold text-slate-900">${o.model}</td>
+                    <td class="p-2.5 font-mono text-sky-600">${o.sn}</td>
+                    <td class="p-2.5">$${o.price}</td>
+                    <td class="p-2.5"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800">${o.status}</span></td>
+                    <td class="p-2.5 text-right">
+                        ${o.status === 'Pending' ? `<button onclick="updateOrderStatus('${o.id}', 'Activated')" class="px-2 py-1 bg-emerald-600 text-white font-bold rounded text-[10px]">Approve</button>` : 'Done'}
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function renderAdminOrders() {
+            const tbody = document.getElementById('adminOrdersTbody');
+            tbody.innerHTML = '';
+            appState.orders.forEach(o => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="p-2.5 font-mono text-slate-500">${o.id}</td>
+                    <td class="p-2.5 font-semibold text-slate-900">${o.model}</td>
+                    <td class="p-2.5 font-mono text-sky-600">${o.sn}</td>
+                    <td class="p-2.5 font-bold text-emerald-600">$${o.price}</td>
+                    <td class="p-2.5 font-mono text-slate-500">${o.txId}</td>
+                    <td class="p-2.5"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-800">${o.status}</span></td>
+                    <td class="p-2.5 text-right"><button onclick="updateOrderStatus('${o.id}', 'Activated')" class="p-1 bg-emerald-100 text-emerald-700 rounded"><i class="fa-solid fa-check"></i></button></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function renderAdminPayments() {
+            const tbody = document.getElementById('adminPaymentsTbody');
+            tbody.innerHTML = '';
+            appState.orders.filter(o => o.status === 'Pending').forEach(o => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="p-2.5 font-mono text-amber-600 font-bold">${o.txId}</td>
+                    <td class="p-2.5 font-bold text-emerald-600">$${o.price}</td>
+                    <td class="p-2.5 text-slate-900 font-semibold">${o.model}</td>
+                    <td class="p-2.5 font-mono text-sky-600">${o.sn}</td>
+                    <td class="p-2.5 text-right"><button onclick="updateOrderStatus('${o.id}', 'Activated')" class="px-2 py-1 bg-amber-500 text-white font-bold rounded text-xs">Confirm</button></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function renderAdminModels() {
+            const container = document.getElementById('adminModelsGrid');
+            container.innerHTML = '';
+            appState.models.forEach(m => {
+                const card = document.createElement('div');
+                card.className = 'bg-slate-50 p-3 rounded-xl border border-slate-200 flex items-center justify-between';
+                card.innerHTML = `<span class="text-xs font-bold text-slate-900">${m.name}</span><input type="number" value="${m.price}" onchange="updateModelPrice('${m.id}', this.value)" class="w-16 bg-white border border-slate-300 text-xs text-sky-600 font-bold p-1 rounded text-center">`;
+                container.appendChild(card);
+            });
+        }
+
+        function renderClientModels() {
+            const container = document.getElementById('clientModelsGrid');
+            container.innerHTML = '';
+            const q = document.getElementById('clientSearchInput').value.toLowerCase();
+            appState.models.filter(m => m.active && m.name.toLowerCase().includes(q)).forEach(m => {
+                const card = document.createElement('div');
+                card.className = 'glass-card p-4 rounded-2xl flex flex-col justify-between';
+                card.innerHTML = `
+                    <div>
+                        <div class="h-24 rounded-xl bg-slate-900 mb-3 flex items-center justify-center text-white p-3">
+                            <span class="font-black text-xs uppercase tracking-wider">iREMOVAL <span class="text-sky-400 font-light">PRO</span></span>
+                        </div>
+                        <h3 class="text-sm font-bold text-slate-900 mb-1">${m.name}</h3>
+                        <p class="text-[10px] text-slate-500 mb-3"><i class="fa-solid fa-circle-check text-emerald-600"></i> Official Auto SN Registration</p>
+                    </div>
+                    <div class="flex items-center justify-between border-t border-slate-200 pt-2.5">
+                        <span class="text-base font-black text-emerald-600">$${m.price} <span class="text-[9px] text-slate-500 font-normal">USDT</span></span>
+                        <button onclick="openClientOrderModal('${m.id}')" class="px-3 py-1.5 bg-sky-600 hover:bg-sky-500 text-white text-xs font-black rounded-xl shadow-md">Register SN</button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function renderClientOrders() {
+            const tbody = document.getElementById('clientOrdersTbody');
+            tbody.innerHTML = '';
+            appState.orders.forEach(o => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="p-2.5 font-bold text-slate-900">${o.model}</td>
+                    <td class="p-2.5 font-mono text-sky-600">${o.sn}</td>
+                    <td class="p-2.5">$${o.price}</td>
+                    <td class="p-2.5 font-mono text-slate-500">${o.txId}</td>
+                    <td class="p-2.5"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800">${o.status}</span></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function updateOrderStatus(id, newStatus) {
+            const order = appState.orders.find(o => o.id === id);
+            if (order) {
+                order.status = newStatus;
+                saveToStorage();
+                renderAll();
+                showToast(`Order updated to ${newStatus}`, 'success');
+            }
+        }
+
+        function updateModelPrice(id, newPrice) {
+            const m = appState.models.find(x => x.id === id);
+            if (m) {
+                m.price = parseFloat(newPrice) || m.price;
+                saveToStorage();
+            }
+        }
+
+        function syncSettingsForm() {
+            document.getElementById('cfgBinanceId').value = appState.binanceId;
+            document.getElementById('cfgUsdtAddress').value = appState.usdtAddress;
+            document.getElementById('modalBinanceId').innerText = appState.binanceId;
+            document.getElementById('modalUsdtAddr').innerText = appState.usdtAddress;
+        }
+
+        function saveBinanceSettings(e) {
+            e.preventDefault();
+            appState.binanceId = document.getElementById('cfgBinanceId').value.trim();
+            appState.usdtAddress = document.getElementById('cfgUsdtAddress').value.trim();
+            saveToStorage();
+            renderAll();
+            showToast('Settings saved successfully!', 'success');
+        }
+
+        function openClientOrderModal(modelId) {
+            const m = appState.models.find(x => x.id === modelId);
+            if (!m) return;
+            appState.activeClientOrder = { model: m.name, price: m.price, sn: '' };
+            document.getElementById('mClientModelTitle').innerText = `Register ${m.name}`;
+            document.getElementById('mClientModelInput').value = m.name;
+            document.getElementById('mClientPriceTag').innerText = `$${m.price.toFixed(2)} USDT`;
+            document.getElementById('clientOrderModal').classList.remove('hidden');
+        }
+
+        function handleClientOrderSubmit(e) {
+            e.preventDefault();
+            const sn = document.getElementById('mClientSnInput').value.trim();
+            if (!sn) return;
+            appState.activeClientOrder.sn = sn;
+            closeModal('clientOrderModal');
+            startPaymentTimer(30 * 60);
+            document.getElementById('binanceCheckoutModal').classList.remove('hidden');
+        }
+
+        function startPaymentTimer(duration) {
+            clearInterval(timerInterval);
+            let timer = duration, minutes, seconds;
+            const display = document.getElementById('paymentTimer');
+            timerInterval = setInterval(() => {
+                minutes = parseInt(timer / 60, 10);
+                seconds = parseInt(timer % 60, 10);
+                display.textContent = `${minutes < 10 ? '0' + minutes : minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
+                if (--timer < 0) {
+                    clearInterval(timerInterval);
+                    display.textContent = "EXPIRED";
+                    closeModal('binanceCheckoutModal');
+                }
+            }, 1000);
+        }
+
+        function handleBinanceTxSubmit(e) {
+            e.preventDefault();
+            const txId = document.getElementById('mTxIdInput').value.trim();
+            if (!txId) return;
+
+            const newOrder = {
+                id: 'IREM-' + Math.floor(100000 + Math.random() * 900000),
+                model: appState.activeClientOrder.model,
+                sn: appState.activeClientOrder.sn,
+                price: appState.activeClientOrder.price,
+                txId: txId,
+                status: 'Activated',
+                date: new Date().toISOString().split('T')[0]
+            };
+
+            appState.orders.unshift(newOrder);
+            saveToStorage();
+            clearInterval(timerInterval);
+            closeModal('binanceCheckoutModal');
+            renderAll();
+            showToast(`Serial ${newOrder.sn} activated successfully!`, 'success');
+        }
+
+        function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+        function copyText(id) {
+            navigator.clipboard.writeText(document.getElementById(id).innerText);
+            showToast('Copied to clipboard!', 'info');
+        }
+
+        function showToast(msg, type) {
+            const t = document.createElement('div');
+            t.className = `fixed bottom-5 right-5 z-50 px-4 py-2.5 rounded-xl text-white text-xs font-bold shadow-xl ${type === 'error' ? 'bg-rose-600' : 'bg-emerald-600'}`;
+            t.innerText = msg;
+            document.body.appendChild(t);
+            setTimeout(() => t.remove(), 3000);
+        }
+    </script>
+</body>
+</html>
